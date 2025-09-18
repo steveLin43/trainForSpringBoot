@@ -36,4 +36,10 @@ public class Todo {
     @JoinColumn(name="user_id")
     private User user;
 
+    // 設定多對多關聯時，需要創造中介表格
+    // 以此關聯來說，需要設定一個含有 todo_id, tag_id 的中介表格
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="todos_tag", joinColumns = {@JoinColumn(name="tag_id")}, inverseJoinColumns = {@JoinColumn(name="todo_id")})
+    Set<Tag> tags;
+
 }
