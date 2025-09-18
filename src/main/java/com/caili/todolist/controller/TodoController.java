@@ -3,6 +3,7 @@ package com.caili.todolist.controller;
 import com.caili.todolist.model.entity.Todo;
 import com.caili.todolist.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.mongo.ReactiveStreamsMongoClientDependsOnBeanFactoryPostProcessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,13 +36,15 @@ public class TodoController {
 
     @ResponseBody
     @PutMapping("/todos/{id}")
-    public void upadteTodo(@PathVariable Integer id, @RequestBody Todo todo) {
+    public String upadteTodo(@PathVariable Integer id, @RequestBody Todo todo) {
         todoService.updateTodo(id ,todo);
+        return "OK";
     }
 
     @ResponseBody
     @DeleteMapping("/todos/{id}")
-    public void deleteTodo(@PathVariable Integer id) {
+    public String deleteTodo(@PathVariable Integer id) {
         todoService.deleteTodo(id);
+        return "OK";
     }
 }
