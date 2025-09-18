@@ -24,11 +24,6 @@ public class TodoService {
     }
 
     public Iterable<Todo> createTodo(Todo todo) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        df.setTimeZone(TimeZone.getTimeZone("GMT"));
-        String date = df.format(new Date());
-        todo.setCreateTime(date);
-        todo.setUpdateTime(date);
         todoDao.save(todo);
         return getTodo();
     }
