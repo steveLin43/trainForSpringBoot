@@ -12,28 +12,22 @@ import java.util.Date;
 @Entity
 @Table
 @Data
-public class Todo {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     @Column
-    String task = '';
+    public String name;
 
     @Column(insertable = false, columnDefinition = "int default 1")
-    Integer status = 1;
+    Integer gender = 1;
 
-    @CreatedDate
-    @Column(updatable = false, nullable = false)
-    Date createTime = new Date();
+    @Column
+    public String password;
 
-    @LastModifiedDate
-    @Column(nullable = false)
-    Date updateTime = new Date();
-
-    @JsonBackReference // 子級角色
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id")
-    private User user;
-
+    @JsonManagedReference // 父級角色
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @EqualsAndHashCode.Exclude
+    private Set<Todo> todos;
 }
