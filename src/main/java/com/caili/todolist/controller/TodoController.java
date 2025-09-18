@@ -5,9 +5,9 @@ import com.caili.todolist.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import javax.jws.WebParam;
 
 @Controller
 public class TodoController {
@@ -30,6 +30,18 @@ public class TodoController {
         Todo emptyTodo = new Todo();
         model.addAttribute("todolist", allTodoList);
         model.addAttribute("todoObject", emptyTodo);
-        return "todolist";
+        return "redirect:/todos"; // 自動重整頁面，避免要必須手動重整頁面而導致重複送值問題
+    }
+
+    @ResponseBody
+    @PutMapping("/todos/{id}")
+    public void upadteTodo(@PathVariable Integer id, @RequestBody Todo todo) {
+        todoService.updateTodo(id ,todo);
+    }
+
+    @ResponseBody
+    @DeleteMapping("/todos/{id}")
+    public void deleteTodo(@PathVariable Integer id) {
+        todoService.deleteTodo(id);
     }
 }
